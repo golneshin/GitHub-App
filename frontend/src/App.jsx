@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
+
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
@@ -11,7 +13,10 @@ function App() {
   return (
     <div className='flex'>
       <SidebarCompo/>
-      <div className="max-w-5xl my-5 mx-auto text-white transition-all duration-300 flex-1">
+      <div 
+        className="max-w-5xl my-5 mx-auto text-white 
+        transition-all duration-300 flex-1"
+        >
         <Routes>
           <Route path="/" element={<HomePage/>} />
           <Route path="/login" element={<LoginPage/>} />
@@ -19,6 +24,7 @@ function App() {
           <Route path="/explore" element={<ExplorePage/>} />
           <Route path="/Likes" element={<LikesPage/>} />
         </Routes>
+        <Toaster />
       </div>
     </div>
   )

@@ -1,7 +1,20 @@
 import { FaCopy, FaRegStar } from "react-icons/fa"
 import { FaCodeBranch, FaCodeFork } from "react-icons/fa6"
+import { formatDate } from "../utils/functions";
+import toast from "react-hot-toast";
 
-const RepoComp = () => {
+const RepoComp = ({repo}) => {
+  const release_date = formatDate(repo?.created_at);
+  const repo_lang = `/${repo?.language}.svg`
+  const handleCloneClick = async (repo) => {
+		try {
+			await navigator.clipboard.writeText(repo.clone_url);
+			toast.success("Repo URL cloned to clipboard");
+		} catch (error) {
+			toast.error("Clipboard write failed.");
+		}
+	};
+
   return (
     <li className=' mb-10 ms-7'>
       <span
@@ -12,26 +25,27 @@ const RepoComp = () => {
 			</span>
       <div className='flex gap-2 items-center flex-wrap'>
         <a
-					href={"https://github.com/burakorkmez/mern-chat-app"}
+					href={repo?.html_url}
 					target='_blank'
 					rel='noreferrer'
 					className='flex items-center gap-2 text-lg font-semibold'
 				  >
-					mern-chat-app
+					{repo?.name}
 				</a>
         <span
 					className='bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5
 					py-0.5 rounded-full flex items-center gap-1'
 				>
-					<FaRegStar /> 167
+					<FaRegStar /> {repo?.stargazers_count}
 				</span>
 				<span
 					className='bg-purple-100 text-purple-800 text-xs font-medium
 					 px-2.5 py-0.5 rounded-full flex items-center gap-1'
 				>
-					<FaCodeFork /> 25
+					<FaCodeFork /> {repo?.forks_count}
 				</span>
 				<span
+          onClick={() => handleCloneClick(repo)}
 					className='cursor-pointer bg-green-100 text-green-800 text-xs
 					font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1'
 				>
@@ -42,10 +56,14 @@ const RepoComp = () => {
 				className='block my-1 text-xs font-normal leading-none
 			 text-gray-400'
 			>
-				Released on Jan 1, 2021
+				Released on {release_date}
 			</time>
-      <p className='mb-4 text-base font-normal text-gray-300'>Real Time Chat App | MERN && Socket.io && JWT</p>
-			<img src={"/javascript.svg"} alt='Programming language icon' className='h-8' />
+      <p className='mb-4 text-base font-normal text-gray-300'>
+        {repo?.description ? repo.description.slice(0, 500) : "No description provided."}
+      </p>
+			{repo?.language ? 
+      (<img src={repo_lang.toLowerCase().replace(/\s/g, '')} alt={`${repo?.language} icon`} className='h-8' />) :
+       null}
     </li>
   )
 }
