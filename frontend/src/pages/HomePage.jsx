@@ -17,20 +17,17 @@ const HomePage = () => {
     setLoading(true)
 
     try {
-      const userRes = await fetch(`https://api.github.com/users/${username}`, {
-        headers:{
-          authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
-        }
-      })
-      const userProfile = await userRes.json()
-      setUserProfile(userProfile)
+      const res = await fetch('http://localhost:5000/api/users/' + username)
 
-      const reposRes = await fetch(userProfile.repos_url)
-      const repos = await reposRes.json()
+      const { userProfile, repos } = await res.json()
+
+      setUserProfile(userProfile)
       setRepos(repos)
 
+      console.log('repos:' ,repos)
       console.log('userProfile:', userProfile)
-      console.log('repos:', repos)
+
+      return { userProfile, repos }
       
     } catch (error) {
       toast.error(error.message)
