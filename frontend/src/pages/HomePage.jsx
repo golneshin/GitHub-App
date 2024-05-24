@@ -17,15 +17,12 @@ const HomePage = () => {
     setLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/api/users/' + username)
+      const res = await fetch('/api/users/' + username)
 
       const { userProfile, repos } = await res.json()
 
       setUserProfile(userProfile)
       setRepos(repos)
-
-      console.log('repos:' ,repos)
-      console.log('userProfile:', userProfile)
 
       return { userProfile, repos }
       

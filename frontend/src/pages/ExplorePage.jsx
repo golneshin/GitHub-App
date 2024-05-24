@@ -14,9 +14,10 @@ const ExplorePage = () => {
     setRepos([])
 
     try {
-      const res = await fetch(`http://localhost:5000/api/explore/repos/${language}`)
-      const {repoExplore} = await res.json()
-      setRepos(repoExplore)
+      const res = await fetch(`/api/explore/repos/${language}`)
+      const {repos} = await res.json() 
+      //{repo} is a nested object in explore API endpoint that has been destructured.
+      setRepos(repos)
       setSelectedLang(language)
       
     } catch (error) {

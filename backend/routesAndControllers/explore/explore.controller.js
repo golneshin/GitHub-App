@@ -11,7 +11,7 @@ export const exploreController = async (req, res) => {
     })
 
     const repoExplore = await repoExploreRes.json()
-    res.status(200).json({ repoExplore: repoExplore.items })
+    res.status(200).json({  repos: repoExplore.items })
     
   } catch (error) {
       res.status(500).json({error: error.message}) 

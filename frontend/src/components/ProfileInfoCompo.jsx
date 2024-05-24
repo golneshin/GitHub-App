@@ -1,9 +1,11 @@
 import { IoLocationOutline } from "react-icons/io5";
 import { TfiThought } from "react-icons/tfi";
-import { FaHeart, FaEye } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { RiGitRepositoryFill, RiUserFollowFill, RiUserFollowLine } from "react-icons/ri";
 import { formatDate } from "../utils/functions";
+import LikeProfileComp from "./LikeProfileComp"
+
 
 const ProfileInfoCompo = ({userProfile}) => {
 
@@ -19,14 +21,7 @@ const ProfileInfoCompo = ({userProfile}) => {
 					</a>
           {/* like & view */}
           <div className="flex flex-col gap-2">
-            <button 
-              type="button"
-              className="bg-glass font-medium w-full text-xs p-2 rounded-md 
-              cursor-pointer border border-blue-400 flex items-center gap-2"
-              >
-              <FaHeart size={16}/>
-              Like Profile
-            </button>
+            <LikeProfileComp userProfile={userProfile}/>
             <a
 							href={userProfile.html_url}
 							target='_blank'
